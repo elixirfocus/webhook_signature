@@ -2,7 +2,7 @@
 
 A sample Phoenix app to help demonstrate how to validate the signature of a webhook payload in Elixir.
 
-Blog post: <https://phoenixbyexample.com>
+Blog post: <https://phoenixbyexample.com/posts/securing-webhook-payload-delivery-in-phoenix/>
 
 ## Usage Demo
 
