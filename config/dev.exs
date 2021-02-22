@@ -74,3 +74,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# This is the secret we would share with GitHub when setting up the webhook.
+config :webhook_signature, :github, webhook_secret: "secretstuff"

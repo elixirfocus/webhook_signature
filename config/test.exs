@@ -20,3 +20,5 @@ config :webhook_signature, WebhookSignatureWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :webhook_signature, :github, webhook_secret: nil

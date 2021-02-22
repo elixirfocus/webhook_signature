@@ -7,16 +7,32 @@ defmodule WebhookSignatureWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
+    plug Plug.Parsers,
+      parsers: [:urlencoded, :multipart, :json],
+      pass: ["*/*"],
+      json_decoder: Phoenix.json_library()
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug WebhookSignatureWeb.Plugs.RawBodyPassthrough, length: 4_000_000
+
+    # It is important that this comes after `WebhookSignatureWeb.Plugs.RawBodyPassthrough`
+    # as it relies on the `:raw_body` being inside the `conn.assigns`.
+    plug WebhookSignatureWeb.Plugs.RequirePayloadSignatureMatch
   end
 
   scope "/", WebhookSignatureWeb do
     pipe_through :browser
 
     get "/", PageController, :index
+  end
+
+  scope "/github", WebhookSignatureWeb do
+    pipe_through :api
+
+    post "/webhook", GitHubWebhookController, :webhook
   end
 
   # Other scopes may use custom stacks.
