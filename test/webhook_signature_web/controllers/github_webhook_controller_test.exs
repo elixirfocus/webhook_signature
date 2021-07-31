@@ -27,7 +27,7 @@ defmodule WebhookSignatureWeb.GitHubWebhookControllerTest do
       {:ok, signature} = PayloadValidator.generate_payload_signature(payload, webhook_secret)
 
       conn
-      |> Conn.put_req_header("x-hub-signature", "sha1=#{signature}")
+      |> Conn.put_req_header("x-hub-signature", "sha256=#{signature}")
       |> post(Routes.git_hub_webhook_path(conn, :webhook), payload)
       |> json_response(:ok)
     end
@@ -40,7 +40,7 @@ defmodule WebhookSignatureWeb.GitHubWebhookControllerTest do
         conn
         |> Conn.put_req_header(
           "x-hub-signature",
-          "sha1=BOGUS33+nZCLDWT6sg+LMELxmyG7Qv+0PkOFJYCTSXU="
+          "sha256=BOGUS33+nZCLDWT6sg+LMELxmyG7Qv+0PkOFJYCTSXU="
         )
         |> post(Routes.git_hub_webhook_path(conn, :webhook), payload)
         |> json_response(403)
@@ -64,7 +64,7 @@ defmodule WebhookSignatureWeb.GitHubWebhookControllerTest do
         conn
         |> Conn.put_req_header(
           "x-hub-signature",
-          "sha1=#{signature}"
+          "sha256=#{signature}"
         )
         |> post(Routes.git_hub_webhook_path(conn, :webhook), hacked_payload)
         |> json_response(403)

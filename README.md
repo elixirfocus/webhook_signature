@@ -9,7 +9,7 @@ Blog post: <https://phoenixbyexample.com/posts/securing-webhook-payload-delivery
 ```bash
 $ curl --verbose \
        -H "Content-Type: application/json" \
-       -H "X-Hub-Signature: sha1=b1f6e75cbe929a8b68c1f77b6fb87d6c4bc27cc9" \
+       -H "X-Hub-Signature: sha256=83f6ac8a267da03ba43b9a87b5b665fa8e303bd493dc6c90d44e07a19bf7cb8c" \
        -d '{"hello":"world"}' \
        http://127.0.0.1:4000/github/webhook
 ```
@@ -25,7 +25,7 @@ Output showing success, `HTTP/1.1 200 OK`:
 > User-Agent: curl/7.64.1
 > Accept: */*
 > Content-Type: application/json
-> X-Hub-Signature: sha1=b1f6e75cbe929a8b68c1f77b6fb87d6c4bc27cc9
+> X-Hub-Signature: sha256=83f6ac8a267da03ba43b9a87b5b665fa8e303bd493dc6c90d44e07a19bf7cb8c
 > Content-Length: 17
 > 
 * upload completely sent off: 17 out of 17 bytes
