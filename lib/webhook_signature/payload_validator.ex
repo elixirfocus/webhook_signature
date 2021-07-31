@@ -34,7 +34,7 @@ defmodule WebhookSignature.PayloadValidator do
   end
 
   def generate_payload_signature(payload, app_secret) do
-    {:ok, :crypto.hmac(:sha256, app_secret, payload) |> Base.encode64()}
+    {:ok, :crypto.mac(:hmac, :sha, app_secret, payload) |> Base.encode16(case: :lower)}
   end
 
   defp webhook_secret do

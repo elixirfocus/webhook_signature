@@ -6,7 +6,9 @@ defmodule WebhookSignature.PayloadValidatorTest do
 
   describe "is_authentic_payload?/2" do
     setup do
-      # `is_authentic_payload?/2` relies on an application configuration of `webhook_secret` and thus we need to prepare that application state before each test.
+      # `is_authentic_payload?/2` relies on an application configuration of
+      # `webhook_secret` and thus we need to prepare that application state
+      # before each test.
       :ok = Application.put_env(:webhook_signature, :github, webhook_secret: "secretstuff")
 
       on_exit(fn ->
@@ -18,7 +20,7 @@ defmodule WebhookSignature.PayloadValidatorTest do
       payload = ~s({"hello":"world"})
 
       conn = %Conn{
-        req_headers: [{"x-hub-signature", "sha256=g/asiiZ9oDukO5qHtbZl+o4wO9ST3GyQ1E4HoZv3y4w="}]
+        req_headers: [{"x-hub-signature", "sha256=b1f6e75cbe929a8b68c1f77b6fb87d6c4bc27cc9"}]
       }
 
       assert PayloadValidator.is_authentic_payload?(conn, payload)
@@ -50,7 +52,7 @@ defmodule WebhookSignature.PayloadValidatorTest do
       payload = ~s({"hello":"world"})
       app_secret = "secretstuff"
 
-      assert {:ok, "g/asiiZ9oDukO5qHtbZl+o4wO9ST3GyQ1E4HoZv3y4w="} =
+      assert {:ok, "b1f6e75cbe929a8b68c1f77b6fb87d6c4bc27cc9"} =
                PayloadValidator.generate_payload_signature(payload, app_secret)
     end
 
