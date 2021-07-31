@@ -24,8 +24,11 @@ defmodule WebhookSignature.PayloadValidator do
 
   defp is_payload_signature_valid?(payload_signature, payload) do
     case generate_payload_signature(payload, webhook_secret()) do
-      {:ok, ^payload_signature} -> true
-      _ -> false
+      {:ok, generated_payload_signature} ->
+        Plug.Crypto.secure_compare(generated_payload_signature, payload_signature)
+
+      _ ->
+        false
     end
   end
 
