@@ -20,7 +20,7 @@ defmodule WebhookSignature.PayloadValidatorTest do
       payload = ~s({"hello":"world"})
 
       conn = %Conn{
-        req_headers: [{"x-hub-signature", "sha256=b1f6e75cbe929a8b68c1f77b6fb87d6c4bc27cc9"}]
+        req_headers: [{"x-hub-signature", "sha1=b1f6e75cbe929a8b68c1f77b6fb87d6c4bc27cc9"}]
       }
 
       assert PayloadValidator.is_authentic_payload?(conn, payload)
@@ -30,7 +30,7 @@ defmodule WebhookSignature.PayloadValidatorTest do
       payload = ~s({"hello":"world"})
 
       conn = %Conn{
-        req_headers: [{"x-hub-signature", "sha256=BOGUS33+nZCLDWT6sg+LMELxmyG7Qv+0PkOFJYCTSXU="}]
+        req_headers: [{"x-hub-signature", "sha1=BOGUS33+nZCLDWT6sg+LMELxmyG7Qv+0PkOFJYCTSXU="}]
       }
 
       refute PayloadValidator.is_authentic_payload?(conn, payload)

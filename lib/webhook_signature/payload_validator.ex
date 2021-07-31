@@ -14,7 +14,7 @@ defmodule WebhookSignature.PayloadValidator do
   defp signature_from_req_headers(req_headers) do
     case List.keyfind(req_headers, "x-hub-signature", 0) do
       {"x-hub-signature", full_signature} ->
-        "sha256=" <> signature = full_signature
+        "sha1=" <> signature = full_signature
         signature
 
       _ ->
